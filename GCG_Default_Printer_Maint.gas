@@ -1,0 +1,378 @@
+Program.Sub.ScreenSU.Start
+gui.SS_Form1..create
+gui.SS_Form1..caption("Report Printer Setup")
+gui.SS_Form1..size(7960,7155)
+gui.SS_Form1..position(0,0)
+gui.SS_Form1..event(unload,unload)
+gui.SS_Form1..alwaysontop(False)
+gui.SS_Form1..fontname("Arial")
+gui.SS_Form1..fontsize(8)
+gui.SS_Form1..forecolor(0)
+gui.SS_Form1..fontstyle(,,,,)
+gui.SS_Form1..BackColor(-2147483633)
+gui.SS_Form1..controlbox(True)
+gui.SS_Form1..maxbutton(False)
+gui.SS_Form1..minbutton(False)
+gui.SS_Form1..mousepointer(0)
+gui.SS_Form1..moveable(True)
+gui.SS_Form1..sizeable(False)
+gui.SS_Form1..ShowInTaskBar(True)
+gui.SS_Form1..titlebar(True)
+gui.SS_Form1.lbl_txtOrder.create(label,"Order Type",True,1800,200,1,100,135,True,0,Arial,8,-2147483633,0)
+gui.SS_Form1.txtOrder.create(textbox,"",True,1800,330,0,100,335,True,0,Arial,8,16777215,1)
+gui.SS_Form1.cmd_txtOrder.create(button)
+gui.SS_Form1.cmd_txtOrder.caption("^")
+gui.SS_Form1.cmd_txtOrder.visible(True)
+gui.SS_Form1.cmd_txtOrder.size(330,330)
+gui.SS_Form1.cmd_txtOrder.zorder(0)
+gui.SS_Form1.cmd_txtOrder.position(1985,335)
+gui.SS_Form1.cmd_txtOrder.enabled(True)
+gui.SS_Form1.cmd_txtOrder.fontname("Arial")
+gui.SS_Form1.cmd_txtOrder.fontsize(8)
+gui.SS_Form1.cmd_txtOrder.event(click,brwordertype)
+gui.SS_Form1.lbl_txtPrinter.create(label,"Printer Name",True,1800,200,1,2455,135,True,0,Arial,8,-2147483633,0)
+gui.SS_Form1.txtPrinter.create(textbox,"",True,3615,330,0,2455,335,True,0,Arial,8,16777215,1)
+gui.SS_Form1.cmd_txtPrinter.create(button)
+gui.SS_Form1.cmd_txtPrinter.caption("^")
+gui.SS_Form1.cmd_txtPrinter.visible(True)
+gui.SS_Form1.cmd_txtPrinter.size(330,330)
+gui.SS_Form1.cmd_txtPrinter.zorder(0)
+gui.SS_Form1.cmd_txtPrinter.position(6140,335)
+gui.SS_Form1.cmd_txtPrinter.enabled(True)
+gui.SS_Form1.cmd_txtPrinter.fontname("Arial")
+gui.SS_Form1.cmd_txtPrinter.fontsize(8)
+gui.SS_Form1.cmd_txtPrinter.event(click,brwprinter)
+gui.SS_Form1.cmd_lvwStoreAdd.create(button)
+gui.SS_Form1.cmd_lvwStoreAdd.caption("Add")
+gui.SS_Form1.cmd_lvwStoreAdd.visible(True)
+gui.SS_Form1.cmd_lvwStoreAdd.size(1000,330)
+gui.SS_Form1.cmd_lvwStoreAdd.zorder(0)
+gui.SS_Form1.cmd_lvwStoreAdd.position(6610,335)
+gui.SS_Form1.cmd_lvwStoreAdd.enabled(True)
+gui.SS_Form1.cmd_lvwStoreAdd.fontname("Arial")
+gui.SS_Form1.cmd_lvwStoreAdd.fontsize(8)
+gui.SS_Form1.cmd_lvwStoreAdd.event(click,add_click)
+gui.SS_Form1.cmd_lvwStoreAdd.SetInternationalID(7600)
+gui.SS_Form1.cmdSave.create(button)
+gui.SS_Form1.cmdSave.caption("Save")
+gui.SS_Form1.cmdSave.visible(True)
+gui.SS_Form1.cmdSave.size(1000,360)
+gui.SS_Form1.cmdSave.zorder(0)
+gui.SS_Form1.cmdSave.position(100,6180)
+gui.SS_Form1.cmdSave.enabled(True)
+gui.SS_Form1.cmdSave.fontname("Arial")
+gui.SS_Form1.cmdSave.fontsize(8)
+gui.SS_Form1.cmdSave.event(click,cmdsave_click)
+gui.SS_Form1.gsflexgrid1.create(gsflexgrid)
+gui.SS_Form1.gsflexgrid1.FixedRows(0)
+gui.SS_Form1.gsflexgrid1.FixedCols(0)
+gui.SS_Form1.gsflexgrid1.visible(True)
+gui.SS_Form1.gsflexgrid1.size(7515,5295)
+gui.SS_Form1.gsflexgrid1.zorder(0)
+gui.SS_Form1.gsflexgrid1.position(100,800)
+gui.SS_Form1.gsflexgrid1.enabled(True)
+gui.SS_Form1.gsflexgrid1.event(commandclick,gsflexgrid1_commandclick)
+gui.SS_Form1.txtOrder.tabstop(True)
+gui.SS_Form1.txtOrder.tabindex(1)
+gui.SS_Form1.cmd_txtOrder.tabstop(True)
+gui.SS_Form1.cmd_txtOrder.tabindex(2)
+gui.SS_Form1.txtPrinter.tabstop(True)
+gui.SS_Form1.txtPrinter.tabindex(3)
+gui.SS_Form1.cmd_txtPrinter.tabstop(True)
+gui.SS_Form1.cmd_txtPrinter.tabindex(4)
+gui.SS_Form1.cmd_lvwStoreAdd.tabstop(True)
+gui.SS_Form1.cmd_lvwStoreAdd.tabindex(5)
+gui.SS_Form1.cmdSave.tabstop(True)
+gui.SS_Form1.cmdSave.tabindex(6)
+
+
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+'ERM
+'Quote 4476
+'started 5/14/2013
+
+V.Local.sError.Declare(String)
+F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+F.Intrinsic.Control.CallSub(Createflex)
+Gui.SS_Form1..Show
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_Default_Printer_Report.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Main.End
+
+Program.Sub.Unload.Start
+F.ODBC.Connection!con.Close
+F.Intrinsic.Control.End
+
+Program.Sub.Unload.End
+
+program.sub.brwordertype.start
+F.Intrinsic.Control.SetErrorHandler("brwordertype_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sCol.Declare(String)
+V.Local.sColW.Declare(String)
+V.Local.sRet.Declare(String)
+
+f.Intrinsic.String.Build("select distinct(key_Value) as Order_Type from V_OE_USER_VALUES where HDR_FLAG = '{0}'","H",v.Local.sSQL)
+V.Local.sCol.Set("Order Type")
+V.Local.sColW.Set("3000")
+F.Intrinsic.UI.Browser("Select a Order Type","Con",V.Local.sSQL,V.Local.sCol,V.Local.sColW,V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+	Gui.SS_Form1.txtOrder.Text(V.Local.sRet(0).Trim)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("brwordertype_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_Default_Printer_Report.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.brwordertype.end
+
+program.sub.brwprinter.start
+F.Intrinsic.Control.SetErrorHandler("brwprinter_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sPrinter.Declare(String)
+
+F.Intrinsic.Printer.SelectPrinterDialog
+v.Local.sPrinter.Set(v.ambient.PRINTERDIALOGSELECTION)
+F.Intrinsic.Control.If(V.Local.sPrinter.Trim,<>,"***CANCEL***")
+	Gui.SS_Form1.txtPrinter.Text(v.ambient.PRINTERDIALOGSELECTION)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("brwprinter_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_Default_Printer_Report.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.brwprinter.end
+
+program.sub.add_click.start
+F.Intrinsic.Control.SetErrorHandler("save_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sOrderType.Declare(String)
+V.Local.sPrinter.Declare(String)
+V.Local.sMsg.Declare(String)
+V.Local.iMsg.Declare(Long)
+
+V.Local.sOrderType.Set(V.Screen.SS_Form1!txtOrder.Text)
+V.Local.sPrinter.Set(V.Screen.SS_Form1!txtPrinter.Text)
+
+F.Intrinsic.Control.If(V.Local.sOrderType.Trim,=,"")
+	F.Intrinsic.UI.Msgbox("Order Type is not valid.")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.If(V.Local.sPrinter.Trim,=,"")
+	F.Intrinsic.UI.Msgbox("Printer Name is not valid.")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+Gui.SS_Form1.txtOrder.Text("")
+Gui.SS_Form1.txtPrinter.Text("")
+
+f.Intrinsic.String.Build("Select * From GCG_Default_Printer Where Order_Type = '{0}'",v.Local.sOrderType.Trim,v.Local.sSQL)
+F.ODBC.Connection!con.OpenLocalRecordsetRW("rst",V.Local.sSQL)
+F.Intrinsic.Control.If(V.ODBC.con!rst.EOF,=,False)
+	F.Intrinsic.String.Concat("Order Type: ",V.Local.sOrderType.Trim," already exists!",V.Ambient.NewLine,V.Ambient.NewLine,"Would you like to update the printer info for this Order Type?",V.Local.sMsg)
+	F.Intrinsic.UI.Msgbox(V.Local.sMsg,"GAB Message",4,V.Local.iMsg)
+	F.Intrinsic.Control.If(V.Local.iMsg,<>,7)
+		F.ODBC.con!rst.Set!Printer(V.Local.sPrinter.Trim)
+		F.ODBC.con!rst.Update
+	F.Intrinsic.Control.Else
+		Gui.SS_Form1.txtOrder.Text(V.Local.sOrderType)
+		Gui.SS_Form1.txtPrinter.Text(V.Local.sPrinter)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.ODBC.con!rst.AddNew
+	F.ODBC.con!rst.Set!Order_Type(V.Local.sOrderType.Trim)
+	F.ODBC.con!rst.Set!Printer(V.Local.sPrinter.Trim)
+	F.ODBC.con!rst.Update
+F.Intrinsic.Control.EndIf
+F.ODBC.con!rst.Close
+F.Intrinsic.Control.CallSub(Createflex)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("save_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_Default_Printer_Report.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.add_click.end
+
+program.sub.gsflexgrid1_commandclick.start
+F.Intrinsic.Control.SetErrorHandler("gsflexgrid1_commandclick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sMsg.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Declare(String)
+
+
+F.Intrinsic.UI.Msgbox("Delete Order Type/Printer Association?","DELETE RECORD",4,V.local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet,<>,7)
+	Gui.SS_Form1.gsflexgrid1.GetTextMatrix(0,V.Args.Key,V.Local.sRet)
+	f.Intrinsic.String.Build("Select * From GCG_Default_Printer Where ID = '{0}'",v.Local.sRet.Trim,v.Local.sSQL)
+	F.ODBC.Connection!con.OpenRecordsetRW("rst",V.Local.sSQL)
+	F.Intrinsic.Control.If(V.ODBC.con!rst.EOF,=,False)
+		F.ODBC.con!rst.Delete
+	F.Intrinsic.Control.EndIf
+	F.ODBC.con!rst.Close
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.CallSub(Createflex)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("gsflexgrid1_commandclick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_Default_Printer_Report.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.gsflexgrid1_commandclick.end
+
+Program.Sub.CreateFlex.Start
+F.Intrinsic.Control.SetErrorHandler("CreateFlex_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.iC.Declare(Long)
+V.Local.sSQL.Declare(String)
+V.Local.iRow.Declare(Long)
+
+Gui.SS_Form1.gsflexgrid1.Rows(1)
+Gui.SS_Form1.gsflexgrid1.Cols(4)
+Gui.SS_Form1.gsflexgrid1.TextMatrix(0,0,"ID")
+Gui.SS_Form1.gsflexgrid1.ColWidth(0,0)
+Gui.SS_Form1.gsflexgrid1.TextMatrix(1,0,"Order Type")
+Gui.SS_Form1.gsflexgrid1.ColWidth(1,1800)
+Gui.SS_Form1.gsflexgrid1.TextMatrix(2,0,"Printer Name")
+Gui.SS_Form1.gsflexgrid1.ColWidth(2,4300)
+Gui.SS_Form1.gsflexgrid1.TextMatrix(3,0,"")
+Gui.SS_Form1.gsflexgrid1.ColWidth(3,1000)
+
+F.Intrinsic.Control.For(V.Local.iC,0,2,1)
+	Gui.SS_Form1.gsflexgrid1.BuildStyle(1,V.Local.iC,"Type","Locked","True")
+	Gui.SS_Form1.gsflexgrid1.BuildStyle(1,V.Local.iC,"Format","Alignment",2)
+F.Intrinsic.Control.Next(V.Local.iC)
+
+F.Intrinsic.Control.For(V.Local.iC,3,3,1)
+	Gui.SS_Form1.gsflexgrid1.BuildStyle(1,V.Local.iC,"Type","Command","Delete")
+	Gui.SS_Form1.gsflexgrid1.BuildStyle(1,V.Local.iC,"Format","Alignment",4)
+	Gui.SS_Form1.gsflexgrid1.BuildStyle(1,V.Local.iC,"Type","Locked","False")
+F.Intrinsic.Control.Next(V.Local.iC)
+
+Gui.SS_Form1.gsflexgrid1.Visible(False)
+F.ODBC.Connection!con.OpenRecordsetRO("rst","Select * From GCG_Default_Printer Order By Order_Type")
+Gui.SS_Form1.gsflexgrid1.LoadRecordset("con!rst",1,True)
+F.ODBC.con!rst.Close
+Gui.SS_Form1.gsflexgrid1.FixedRows(1)
+F.Intrinsic.Math.Sub(V.Screen.SS_Form1!gsflexgrid1.Rows,1,V.Local.iRow)
+Gui.SS_Form1.gsflexgrid1.Rows(V.Local.iRow)
+Gui.SS_Form1.gsflexgrid1.Visible(True)
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("CreateFlex_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_Default_Printer_Report.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.CreateFlex.End
+
+program.sub.cmdsave_click.start
+F.Intrinsic.Control.SetErrorHandler("cmdsave_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+'V.Local.iR.Declare(Long,1)
+'V.Local.iRow.Declare(Long)
+V.Local.iRows.Declare(Long)
+V.Local.i.Declare(Long)
+V.Local.sRow.Declare(String)
+
+'F.Intrinsic.Debug.InvokeDebugger
+'F.Intrinsic.Debug.Stop
+F.ODBC.Connection!con.Execute("Delete From GCG_Default_Printer")
+V.Local.iRows.Set(V.Screen.SS_Form1!gsflexgrid1.Rows)
+F.Intrinsic.Math.Sub(V.Local.iRows,1,V.Local.iRows)
+F.Intrinsic.Control.For(V.Local.i,1,V.Local.iRows,1)
+	Gui.SS_Form1.gsflexgrid1.ReadRow(V.Local.i,V.Local.sRow)
+	F.Intrinsic.String.Split(V.Local.sRow,"*!*",V.Local.sRow)
+	F.ODBC.Connection!con.OpenLocalRecordsetRW("rst","Select * From GCG_Default_Printer")
+		F.ODBC.con!rst.AddNew
+		F.ODBC.con!rst.Set!Order_Type(V.Local.sRow(1).Trim)
+		F.ODBC.con!rst.Set!Printer(V.Local.sRow(2).Trim)
+		F.ODBC.con!rst.Update
+		F.ODBC.con!rst.Close
+F.Intrinsic.Control.Next(V.Local.i)
+F.Intrinsic.Control.CallSub(Createflex)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdsave_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_Default_Printer_Report.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmdsave_click.end
+
+Program.Sub.Comments.Start
+${$0$}$GCG_Default_Printer_Report$}$Ryan$}$5/14/2013
+Program.Sub.Comments.End
+Program.Sub.ScreenSS.Start
+SS_Form1{{CAPTION::Report Printer Setup
+SS_Form1.CTRL{{NAME::txtOrder\\TYPE::2\\CAPTION::Order Type\\RANGE::lvwStore\\GROUP::1\\BROWSER::1\\SIZE::1
+SS_Form1.CTRL{{NAME::txtPrinter\\TYPE::2\\CAPTION::Printer Name\\RANGE::lvwStore\\GROUP::1\\BROWSER::1\\SIZE::2
+SS_Form1.CTRL{{NAME::lvwStore\\TYPE::7\\GROUP::-1\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::cmdSave\\TYPE::5\\CAPTION::Save\\GROUP::-1\\BROWSER::0\\SIZE::1
+
+Program.Sub.ScreenSS.End
+
